@@ -13,6 +13,11 @@ pub trait CpuOps {
     fn cpu_do_wakeup(&self);
 }
 
+fn boot(arch: impl Architecture) {
+    arch.get_cpu_ops().cpu_do_wakeup();
+}
+
+// Platform specific code, just to test
 pub struct ArmCpuOps {}
 
 impl CpuOps for ArmCpuOps {
@@ -36,10 +41,4 @@ impl Architecture for Arm {
 
 fn main() {
     boot(Arm {});
-}
-
-// Platform agnostic code:
-
-fn boot(arch: impl Architecture) {
-    arch.get_cpu_ops().cpu_do_wakeup();
 }
